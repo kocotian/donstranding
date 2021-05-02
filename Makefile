@@ -4,11 +4,24 @@ VERSION = 0.1
 # avoid editions of this file.
 include config.mk
 
-LIB = util.c
-OBJ = ${LIB:.c=.o}
-
 all: options donstranding
 
+LIB = util.c
+OBJ = ${LIB:.c=.o} termbox/bin/termbox.a
+
+# termbox
+TERMBOXSRCD=termbox/src
+TERMBOXSRCS=$(TERMBOXSRCD)/termbox.c
+TERMBOXSRCS+=$(TERMBOXSRCD)/input.c
+TERMBOXSRCS+=$(TERMBOXSRCD)/memstream.c
+TERMBOXSRCS+=$(TERMBOXSRCD)/ringbuffer.c
+TERMBOXSRCS+=$(TERMBOXSRCD)/term.c
+TERMBOXSRCS+=$(TERMBOXSRCD)/utf8.c
+
+termbox/bin/termbox.a: ${TERMBOXSRCS}
+	cd termbox && make && cd ..
+
+# main
 options:
 	@echo "donstranding build options:"
 	@echo "CC          = ${CC}"
@@ -16,16 +29,17 @@ options:
 	@echo "CPPFLAGS    = ${CPPFLAGS}"
 	@echo "LDFLAGS     = ${LDFLAGS}"
 
-donstrandingc: donstrandingc.c
-	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $<
+donstrandingc: donstrandingc.c ${OBJ}
+	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $< ${OBJ}
 
-donstrandingd: donstrandingd.c
-	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $<
+donstrandingd: donstrandingd.c ${OBJ}
+	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $< ${OBJ}
 
-donstranding: donstranding.c donstrandingc donstrandingd
-	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $<
+donstranding: donstranding.c donstrandingc donstrandingd ${OBJ}
+	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $< ${OBJ}
 
 clean:
 	rm -f ${OBJ} donstranding donstrandingc donstrandingd
+	cd termbox && make clean && cd ..
 
 .PHONY: all options clean
