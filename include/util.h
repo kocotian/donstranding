@@ -3,9 +3,15 @@
 #ifndef _UTIL_H
 #define _UTIL_H
 
-#define MAX(A, B)               ((A) > (B) ? (A) : (B))
-#define MIN(A, B)               ((A) < (B) ? (A) : (B))
-#define BETWEEN(X, A, B)        ((A) <= (X) && (X) <= (B))
+#define LEN(X)                  (sizeof (X) / sizeof *(X))
+
+#define MAX(A, B)               ((signed)(A) > (signed)(B) ? (signed)(A) : (signed)(B))
+#define MIN(A, B)               ((signed)(A) < (signed)(B) ? (signed)(A) : (signed)(B))
+#define BETWEEN(X, A, B)        ((signed)(A) <= (signed)(X) && (signed)(X) <= (signed)(B))
+
+#define UMAX(A, B)               ((unsigned)(A) > (unsigned)(B) ? (unsigned)(A) : (unsigned)(B))
+#define UMIN(A, B)               ((unsigned)(A) < (unsigned)(B) ? (unsigned)(A) : (unsigned)(B))
+#define UBETWEEN(X, A, B)        ((unsigned)(A) <= (unsigned)(X) && (unsigned)(X) <= (unsigned)(B))
 
 void *ecalloc(size_t nmemb, size_t size);
 void die(const char *fmt, ...);
