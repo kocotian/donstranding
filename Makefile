@@ -16,4 +16,16 @@ options:
 	@echo "CPPFLAGS    = ${CPPFLAGS}"
 	@echo "LDFLAGS     = ${LDFLAGS}"
 
-.PHONY: all options
+donstrandingc: donstrandingc.c
+	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $<
+
+donstrandingd: donstrandingd.c
+	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $<
+
+donstranding: donstranding.c donstrandingc donstrandingd
+	${CC} ${CFLAGS} ${CPPFLAGS} -o $@ $<
+
+clean:
+	rm -f ${OBJ} donstranding donstrandingc donstrandingd
+
+.PHONY: all options clean
