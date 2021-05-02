@@ -4,6 +4,9 @@ VERSION = 0.1
 # avoid editions of this file.
 include config.mk
 
+LIB = util.c
+OBJ = ${LIB:.c=.o}
+
 all: options donstranding
 
 options:

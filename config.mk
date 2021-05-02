@@ -1,5 +1,5 @@
 # includes
-INC = -Itermbox/src/
+INC = -Itermbox/src/ -Iinclude/
 
 # flags
 CFLAGS = -Wall -Wextra -Wconversion -std=c99 -pedantic ${INC}
